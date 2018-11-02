@@ -21,7 +21,7 @@ class PyUpBitTest(unittest.TestCase):
 
     def test_get_days_candles(self):
         pyupbit = PyUpbit()
-        ret = pyupbit.get_days_candles('KRW-ADA')
+        ret = pyupbit.get_days_candles('BTC-ETH')
         self.assertIsNotNone(ret)
         self.assertNotEqual(len(ret), 0)
         logging.info(ret)

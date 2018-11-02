@@ -67,9 +67,34 @@ class PyUpbit():
             params['count'] = count
         return self._get(URL, params=params)
     
-    def get_days_candles(self):
-        pass
+    def get_days_candles(self, market, to=None, count=None, convertingPriceUnit=None):
+        '''
+        Day 캔들
+        https://docs.upbit.com/v1.0/reference#%EC%9D%BCday-%EC%BA%94%EB%93%A4-1
 
+        Args:
+            market (str): 마켓 코드 (ex. KRW-BTC, BTC-BCC)
+            to (str): 마지막 캔들 시각 (exclusive). 포맷 : yyyy-MM-dd'T'HH:mm:ssXXX. 비워서 요청시 가장 최근 캔들
+            count (int): 캔들 개수
+            convertingPriceUnit (str): 종가 환산 화폐 단위 (생략 가능, KRW로 명시할 시 원화 환산 가격을 반환.)
+
+        Returns:
+            json array
+        '''
+        URL = PyUpbit.BASE_URL + '/candles/days'
+        if market not in self.markets:
+            logging.error('invalid market: %s' % market)
+            raise Exception('invalid market: %s' % market)
+
+        params = {'market':market}
+        if to is not None:
+            params['to'] = to
+        if count is not None:
+            params['count'] = count
+        return self._get(URL, params=params)
+
+        
+    
     ############################################################################################
     def _get(self, URL, headers=None, data=None, params=None):
         
