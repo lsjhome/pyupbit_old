@@ -66,7 +66,10 @@ class PyUpbit():
         if count is not None:
             params['count'] = count
         return self._get(URL, params=params)
-   
+    
+    def get_days_candles(self):
+        pass
+
     ############################################################################################
     def _get(self, URL, headers=None, data=None, params=None):
         
