@@ -40,6 +40,13 @@ class PyUpBitTest(unittest.TestCase):
         self.assertNotEqual(len(ret), 0)
         logging.info(ret)
         
+    def test_get_trades_ticks(self):
+        pyupbit = PyUpbit()
+        ret = pyupbit.get_trades_ticks('KRW-ICX')
+        self.assertIsNotNone(ret)
+        self.assertNotEqual(len(ret), 0)
+        logging.info(ret)
+        
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
     unittest.main()

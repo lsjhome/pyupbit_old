@@ -148,8 +148,34 @@ class PyUpbit():
             params['count'] = count
         return self._get(URL, params=params)
 
+
+    def get_trades_ticks(self, market, to=None, count=None, cursor=None):
+        '''
+        당일 채결 내역
+        https://docs.upbit.com/v1.0/reference#%EB%8B%B9%EC%9D%BC-%EC%B2%B4%EA%B2%B0-%EB%82%B4%EC%97%AD
+        
+        Args:
+            market (str): 마켓 코드 (ex. KRW-BTC, BTC-BCC)
+            to (str): 마지막 체결 시각. 형식 : [HHmmss 또는 HH:mm:ss]. 비워서 요청시 가장 최근 데이터
+            count (int): 채결 개수
+            cursor (str): 페이지네이션 커서 (sequentialId)
+        '''
+        URL = PyUpbit.BASE_URL + '/trades/ticks'
+        if market not in self.markets:
+            logging.error('invalid market: %s' % market)
+            raise Exception('invalid market: %s' % market)
+        
+        params = {'market': market}
+        if to is not None:
+            params['to'] = to
+        if count is not None:
+            params['count'] = count
+        if cursor is not None:
+            params['cursor'] = cursor
+        return self._get(URL, params=params)
     
     ############################################################################################
+
     def _get(self, URL, headers=None, data=None, params=None):
         
         response = requests.get(URL, headers=headers, data=data, params=params)
