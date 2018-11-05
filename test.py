@@ -32,7 +32,14 @@ class PyUpBitTest(unittest.TestCase):
         self.assertIsNotNone(ret)
         self.assertNotEqual(len(ret), 0)
         logging.info(ret)
-
+    
+    def test_get_months_candles(self):
+        pyupbit = PyUPbit()
+        ret = pyupbit.get_weeks_candles('BTC-ETH')
+        self.assertIsNotNone(ret)
+        self.assertNotEqual(len(ret), 0)
+        logging.info(ret)
+        
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
     unittest.main()
