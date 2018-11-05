@@ -159,6 +159,9 @@ class PyUpbit():
             to (str): 마지막 체결 시각. 형식 : [HHmmss 또는 HH:mm:ss]. 비워서 요청시 가장 최근 데이터
             count (int): 채결 개수
             cursor (str): 페이지네이션 커서 (sequentialId)
+
+        Returns:
+            json array
         '''
         URL = PyUpbit.BASE_URL + '/trades/ticks'
         if market not in self.markets:
@@ -173,6 +176,41 @@ class PyUpbit():
         if cursor is not None:
             params['cursor'] = cursor
         return self._get(URL, params=params)
+
+
+    def get_ticker(self, markets):
+
+        '''
+        현재가 정보
+        요청 당시 종목의 스냅샷을 반환한다.
+        https://docs.upbit.com/v1.0/reference#ticker%ED%98%84%EC%9E%AC%EA%B0%80-%EB%82%B4%EC%97%AD
+        
+        Args:
+            markets (str[]): 마켓 코드 리스트 (ex. KRW-BTC, BTC-BCC)
+       
+        Returns:
+            json array
+        '''
+        URL = PyUpbit.BASE_URL + '/ticker'
+
+        if not isinstance(markets, list):
+            logging.error('invalid parameter: markets should be list')
+            raise Exception('invalid parameter: markets should be list')
+
+        if len(markets) == 0:
+            logging.error('invalid parameter: no markets')
+            raise Exception('invalid parameter: no markets')
+
+        for market in markets:
+            if market not in self.markets:
+                logging.error('invalid market: %s' % market)
+                raise Exception('invalid market: %s' % market)
+
+
+        markets_data = ', '.join(markets)
+        params = {'markets': markets_data}
+        return self._get(URL, params=params)
+
     
     ############################################################################################
 
