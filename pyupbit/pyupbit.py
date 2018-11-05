@@ -97,7 +97,7 @@ class PyUpbit():
     def get_weeks_candles(self, market, to=None, count=None):
         
         '''
-        주(Week) 캔들
+        Week 캔들
         https://docs.upbit.com/v1.0/reference#%EC%A3%BCweek-%EC%BA%94%EB%93%A4-1
         
         Args:
@@ -122,6 +122,31 @@ class PyUpbit():
         return self._get(URL, params=params)
 
 
+    def get_months_candles(self, market, to=None, count=None):
+    
+        '''
+        Month 캔들
+        https://docs.upbit.com/v1.0/reference#%EC%9B%94month-%EC%BA%94%EB%93%A4-1
+
+        Args:
+            market (str): 마켓 코드 (ex. KRW-BTC, BTC-BCC)
+            to (str): 마지막 캔들 시각 (exclusive). 포맷 : yyyy-MM-dd'T'HH:mm:ssXXX. 비워서 요청시 가장 최근 캔들
+            count (int): 캔들 개수
+
+        Returns:
+            json array
+        '''
+        URL = PyUpbit.BASE_URL + '/candles/months'
+        if market not in self.markets:
+            logging.error('invalid market: %s' % market)
+            raise Exception('invalid market: %s' % market)
+        
+        params = {'market': market}
+        if to is not None:
+            params['to'] = to
+        if count is not None:
+            params['count'] = count
+        return self._get(URL, params=params)
 
     
     ############################################################################################
