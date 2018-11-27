@@ -1,3 +1,4 @@
-Upbit Python Wrapper
+# Upbit Python Wrapper
 
-https://github.com/inasie 님의 wrapper에 기반
+- Upbit api wrapper
+- Mostly based on https://github.com/inasie
