@@ -219,7 +219,7 @@ class PyUpbit():
         response = requests.get(URL, headers=headers, data=data, params=params)
 
         if response.status_code not in [200, 201]:
-            logging.error('get(%s) failed' % (url, response.status_code))
+            logging.error('get(%s) failed' % (URL, response.status_code))
             
             if response.text is not None:
                 logging.error('response : %s' % response.text)
